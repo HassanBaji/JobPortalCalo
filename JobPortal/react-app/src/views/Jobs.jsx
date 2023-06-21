@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import axiosClient from "../axios-client";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function Jobs() {
     const [service, setService] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const { admin, user } = useStateContext();
+    const { token, user, role } = useStateContext();
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const [showFavorites, setShowFavorites] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getPosts();
@@ -51,11 +55,30 @@ export default function Jobs() {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
+        setShowFavorites(false);
     };
 
-    const filteredServices = service.filter((b) =>
-        b.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const toggleFavorites = () => {
+        setShowFavorites(!showFavorites);
+    };
+
+    const filteredServices = showFavorites
+        ? service.filter((b) => favorites.includes(b.id))
+        : service.filter((b) =>
+              b.title.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+
+    const addToFav = (b) => {
+        const index = favorites.indexOf(b.id);
+        if (index !== -1) {
+            favorites.splice(index, 1);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+        } else {
+            favorites.push(b.id);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+        }
+        navigate("/jobs");
+    };
 
     return (
         <div>
@@ -67,8 +90,8 @@ export default function Jobs() {
                 }}
             >
                 <h1>Jobs</h1>
-                {admin && (
-                    <Link to="post-form/new" className="btn-add">
+                {!token && (
+                    <Link to="/post-form/new" className="btn-add">
                         Add new
                     </Link>
                 )}
@@ -81,6 +104,15 @@ export default function Jobs() {
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />
+                    <label htmlFor="favorites">
+                        Favorites
+                        <input
+                            type="checkbox"
+                            id="favorites"
+                            checked={showFavorites}
+                            onChange={toggleFavorites}
+                        />
+                    </label>
                 </div>
                 <table>
                     <thead>
@@ -106,9 +138,21 @@ export default function Jobs() {
                                     <td>{b.title}</td>
                                     <td>{b.desc}</td>
                                     <td>
-                                        <Link to={b.id} className="btn-edit">
+                                        <Link
+                                            to={`/post-form/${b.id}`}
+                                            className="btn-edit"
+                                        >
                                             Edit
                                         </Link>
+                                        &nbsp;
+                                        <button
+                                            className="btn-edit"
+                                            onClick={() => addToFav(b)}
+                                        >
+                                            {favorites.includes(b.id)
+                                                ? "Remove from favorites"
+                                                : "Add to favorites"}
+                                        </button>
                                         &nbsp;
                                         {/* <button onClick={(ev) => onDelete(b)} className="btn-delete">
                     Delete

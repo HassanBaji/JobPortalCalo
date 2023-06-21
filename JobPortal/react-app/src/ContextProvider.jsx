@@ -2,8 +2,10 @@ import { createContext, useContext, useState } from "react";
 
 const StateContext = createContext({
     user: null,
+    role: null,
     admin: null,
     adminEmail: null,
+    userEmail: null,
     token: null,
     adminToken: null,
     notification: null,
@@ -12,11 +14,14 @@ const StateContext = createContext({
     setAdmin: () => {},
     setToken: () => {},
     setAdminToken: () => {},
+    setUserEmail: () => {},
     setNotification: () => {},
+    setRole: () => {},
 });
 
 export const ContextProvider = ({ children }) => {
     const [user, setUser] = useState({});
+    const [role, setRole] = useState({});
     const [userEmail, _setUserEmail] = useState(localStorage.getItem("USER"));
     const [admin, setAdmin] = useState({});
     const [adminEmail, _setAdminEmail] = useState(
@@ -74,6 +79,7 @@ export const ContextProvider = ({ children }) => {
         <StateContext.Provider
             value={{
                 user,
+                role,
                 userEmail,
                 admin,
                 adminEmail,
@@ -84,6 +90,7 @@ export const ContextProvider = ({ children }) => {
                 setAdmin,
                 setAdminEmail,
                 setToken,
+                setRole,
                 setAdminToken,
                 notification,
                 setNotification,

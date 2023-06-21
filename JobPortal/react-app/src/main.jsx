@@ -8,8 +8,8 @@ import App from "./App";
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <ContextProvider>
-            {/* <RouterProvider router={router} /> */}
-            <App />
+            <RouterProvider router={router} />
+            {/* <App /> */}
         </ContextProvider>
     </React.StrictMode>
 );

@@ -4,15 +4,32 @@ import Signup from "./views/Signup";
 import NotFound from "./views/NotFound";
 import PostJobForm from "./views/PostJobForm";
 import Jobs from "./views/Jobs";
+import UserDefaultLayout from "./Components/UserDefaultLayout";
 
 const router = createBrowserRouter([
-    // {
-    //     path: "/",
-    //     element: <UserDefaultLayout />,
-    //     children: [
+    {
+        path: "/",
+        element: <UserDefaultLayout />,
+        children: [
+            {
+                path: "",
+                element: <Navigate to="/jobs" />,
+            },
 
-    //     ],
-    // },
+            {
+                path: "/jobs",
+                element: <Jobs />,
+            },
+            {
+                path: "jobs/post-form/new",
+                element: <PostJobForm key="postCreate" />,
+            },
+            {
+                path: "/post-form/:id",
+                element: <PostJobForm key="postUpdate" />,
+            },
+        ],
+    },
     {
         path: "/login",
         element: <Login />,
@@ -21,21 +38,10 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <Signup />,
     },
+
     {
         path: "*",
         element: <NotFound />,
-    },
-    {
-        path: "/post-form/new",
-        element: <PostJobForm key="postCreate" />,
-    },
-    {
-        path: "/post-form/:id",
-        element: <PostJobForm key="postUpdate" />,
-    },
-    {
-        path: "/jobs",
-        element: <Jobs />,
     },
 ]);
 
