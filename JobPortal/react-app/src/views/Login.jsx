@@ -8,7 +8,7 @@ import { useStateContext } from "../ContextProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-import "/Users/hassanhaji/Documents/MyProjects/Sapwood/BlackVelvet/Black_Velvet/react-app/src/index.css";
+// import "/Users/hassanhaji/Documents/MyProjects/Sapwood/BlackVelvet/Black_Velvet/react-app/src/index.css";
 
 export default function Login() {
     const { token, adminToken } = useStateContext();
