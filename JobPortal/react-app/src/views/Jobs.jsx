@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axiosClient from "../axios-client";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../ContextProvider";
 
 export default function Jobs() {
     const [service, setService] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const { admin, user } = useStateContext();
 
     useEffect(() => {
         getPosts();
@@ -64,16 +66,18 @@ export default function Jobs() {
                     alignItems: "center",
                 }}
             >
-                <h1>Services</h1>
-                <Link to="new" className="btn-add">
-                    Add new
-                </Link>
+                <h1>Jobs</h1>
+                {admin && (
+                    <Link to="post-form/new" className="btn-add">
+                        Add new
+                    </Link>
+                )}
             </div>
             <div className="card animated fadeInDown">
                 <div className="search-container">
                     <input
                         type="text"
-                        placeholder="Search by service name..."
+                        placeholder="Search by job title..."
                         value={searchTerm}
                         onChange={handleSearchChange}
                     />

@@ -20,6 +20,7 @@ export default function Signup() {
     const nameRef = useRef();
     const phoneRef = useRef();
     const roleRef = useRef();
+    const jobTitleRef = useRef();
     const [errors, setErrors] = useState();
     const { setUser, setToken, setUserEmail } = useStateContext();
     const [usersCheck, setUsersCheck] = useState([]);
@@ -54,6 +55,7 @@ export default function Signup() {
             phone: phoneRef.current.value,
             name: nameRef.current.value,
             role: selectedRole?.value,
+            title: jobTitleRef.current.value,
         };
         setErrors(null);
 
@@ -144,6 +146,10 @@ export default function Signup() {
                         value={selectedRole}
                         onChange={(option) => setSelectedRole(option)}
                         placeholder="Select a role"
+                    />
+                    <input
+                        ref={jobTitleRef}
+                        placeholder="job title (job seeker only)"
                     />
                     <br></br>
                     <button className="btn btn-block">Register</button>

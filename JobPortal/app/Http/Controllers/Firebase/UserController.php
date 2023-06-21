@@ -35,6 +35,7 @@ class UserController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'role' => $request->role,
+            'title' => $request->title,
 
 
         ];
@@ -65,6 +66,7 @@ class UserController extends Controller
                     'email' => $request->email,
                     'phone' => $request->phone,
                     'role' => $request->role,
+                    'title' => $request->tilte,
         ];
         $updatRef = $this->database->getReference($this->tableName.'/'.$key)->update($updateData);
     }
