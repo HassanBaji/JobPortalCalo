@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\firebase\FirebaseAuthController;
+
+use App\Http\Controllers\firebase\UserController;
+use App\Http\Controllers\firebase\PostJobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/signup', [FirebaseAuthController::class, 'register']);
 Route::post('/signin', [FirebaseAuthController::class, 'signin']);
+Route::apiResource('/users', UserController::class);
+Route::apiResource('/posts', PostJobController::class);

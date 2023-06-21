@@ -46,22 +46,22 @@ export default function Login() {
         }
     }, [token, adminToken]);
 
-    useEffect(() => {
-        axiosClient
-            .get("/admins")
-            .then(({ data }) => {
-                console.log(data);
-                const myAdmins = Object.keys(data).map((key) => {
-                    return {
-                        ...data[key],
-                        id: key,
-                    };
-                });
-                setAdminCheck(myAdmins);
-            })
+    // useEffect(() => {
+    //     axiosClient
+    //         .get("/admins")
+    //         .then(({ data }) => {
+    //             console.log(data);
+    //             const myAdmins = Object.keys(data).map((key) => {
+    //                 return {
+    //                     ...data[key],
+    //                     id: key,
+    //                 };
+    //             });
+    //             setAdminCheck(myAdmins);
+    //         })
 
-            .catch(() => {});
-    }, []);
+    //         .catch(() => {});
+    // }, []);
 
     const onSubmit = (ev) => {
         ev.preventDefault();

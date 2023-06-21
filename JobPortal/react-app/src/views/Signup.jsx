@@ -6,6 +6,7 @@ import { useState } from "react";
 import axiosClient from "../axios-client";
 import { useStateContext } from "../ContextProvider";
 import { Navigate } from "react-router-dom";
+import Select from "react-select";
 
 export default function Signup() {
     const { token, adminToken } = useStateContext();
@@ -18,9 +19,11 @@ export default function Signup() {
     const passwordConfirmRef = useRef();
     const nameRef = useRef();
     const phoneRef = useRef();
+    const roleRef = useRef();
     const [errors, setErrors] = useState();
     const { setUser, setToken, setUserEmail } = useStateContext();
     const [usersCheck, setUsersCheck] = useState([]);
+    const [selectedRole, setSelectedRole] = useState(null);
 
     useEffect(() => {
         axiosClient
@@ -50,6 +53,7 @@ export default function Signup() {
             email: emailRef.current.value,
             phone: phoneRef.current.value,
             name: nameRef.current.value,
+            role: selectedRole?.value,
         };
         setErrors(null);
 
@@ -132,6 +136,16 @@ export default function Signup() {
                         type="password"
                         placeholder="Passowrd Confirmation"
                     />
+                    <Select
+                        options={[
+                            { value: "Employer", label: "Employer" },
+                            { value: "job_seeker", label: "Job seeker" },
+                        ]}
+                        value={selectedRole}
+                        onChange={(option) => setSelectedRole(option)}
+                        placeholder="Select a role"
+                    />
+                    <br></br>
                     <button className="btn btn-block">Register</button>
                     <p className="message">
                         Already Registred? <Link to="/login">Login</Link>
